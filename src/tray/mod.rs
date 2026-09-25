@@ -430,7 +430,7 @@ async fn async_tray_app(board_kind: BoardKind) -> Result<(), Box<dyn Error>> {
                         Err(e) => {
                             eprintln!("weather update failed: {e}");
                             // Check if board disconnected
-                            if e.to_string().contains("device") {
+                            if e.to_string().to_lowercase().contains("device") {
                                 handle_disconnect(&mut board, &mut state, &menu_items);
                             }
                         }
@@ -450,7 +450,7 @@ async fn async_tray_app(board_kind: BoardKind) -> Result<(), Box<dyn Error>> {
                             None,
                         ) {
                             eprintln!("system update failed: {e}");
-                            if e.to_string().contains("device") {
+                            if e.to_string().to_lowercase().contains("device") {
                                 handle_disconnect(&mut board, &mut state, &menu_items);
                             }
                         }
@@ -463,7 +463,7 @@ async fn async_tray_app(board_kind: BoardKind) -> Result<(), Box<dyn Error>> {
                 if let Some(ref mut b) = board {
                     if let Err(e) = crate::apply_time(b.as_mut(), state.config.general.use_12hr_time) {
                         eprintln!("time sync failed: {e}");
-                        if e.to_string().contains("device") {
+                        if e.to_string().to_lowercase().contains("device") {
                             handle_disconnect(&mut board, &mut state, &menu_items);
                         }
                     }
